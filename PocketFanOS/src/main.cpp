@@ -95,13 +95,13 @@ void loop() {
     else if (serialmessage.startsWith("mode.set ")){
       serialmessage.remove(0,9);
       page=serialmessage.toInt();
-    } else if (serialmessage.startWith("F1.getspeed")){
-      Serial.printf(fan1speed);
-    }else if (serialmessage.startWith("F2.getspeed"))
+    } else if (serialmessage.startsWith("F1.getspeed")){
+      Serial.print(fan1speed);
+    }else if (serialmessage.startsWith("F2.getspeed"))
     {
-      Serial.printf(fan2speed);
-    } else if (serialmessage.startWith("mode.get")){
-      Serial.printf(page);
+      Serial.print(fan2speed);
+    } else if (serialmessage.startsWith("mode.get")){
+      Serial.print(page);
     }
   }
 }
