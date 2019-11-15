@@ -60,8 +60,8 @@ switch (page)
 }
 void setup() {
   Serial.begin(115200);
-  pinMode(12,INPUT);
-  pinMode(12,INPUT);
+  pinMode(12,INPUT_PULLUP);
+  pinMode(12,INPUT_PULLUP);
   pinMode(4,OUTPUT);
   pinMode(5,OUTPUT);
   Serial.printf("Siwat INC PocketFanOS");
