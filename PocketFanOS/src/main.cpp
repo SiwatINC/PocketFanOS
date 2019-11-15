@@ -87,14 +87,21 @@ void loop() {
       fan1speed=serialmessage.toInt();
       analogWrite(4,fan1speed);
     }
-    if (serialmessage.startsWith("F2.setspeed ")){
+    else if (serialmessage.startsWith("F2.setspeed ")){
       serialmessage.remove(0,12);
       fan2speed=serialmessage.toInt();
       analogWrite(5,fan2speed);
     }
-    if (serialmessage.startsWith("mode.set ")){
+    else if (serialmessage.startsWith("mode.set ")){
       serialmessage.remove(0,9);
       page=serialmessage.toInt();
+    } else if (serialmessage.startWith("F1.getspeed")){
+      Serial.printf(fan1speed);
+    }else if (serialmessage.startWith("F2.getspeed"))
+    {
+      Serial.printf(fan2speed);
+    } else if (serialmessage.startWith("mode.get")){
+      Serial.printf(page);
     }
   }
 }
