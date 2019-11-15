@@ -8,6 +8,7 @@ int thermistorconstant = 13;
 int page = 1;
 int fan1speed=0;
 int fan2speed=0;
+String serialmessage;
 void ICACHE_RAM_ATTR rotR(){
   switch (page)
   {
@@ -73,5 +74,22 @@ void loop() {
   if(page==3){
     analogWrite(4,thermistorconstant*analogRead(A0));
     analogWrite(5,thermistorconstant*analogRead(A0));
+  }
+  if(Serial.available()){
+    serialmessage = Serial.readStringUntil('\n');
+    if (serialmessage.startsWith("F1.setspeed ")){
+      serialmessage.remove(0,12);
+      fan1speed=serialmessage.toInt();
+      analogWrite(4,fan1speed);
+    }
+    if (serialmessage.startsWith("F2.setspeed ")){
+      serialmessage.remove(0,12);
+      fan2speed=serialmessage.toInt();
+      analogWrite(5,fan2speed);
+    }
+    if (serialmessage.startsWith("mode.set ")){
+      serialmessage.remove(0,9);
+      page=serialmessage.toInt();
+    }
   }
 }
