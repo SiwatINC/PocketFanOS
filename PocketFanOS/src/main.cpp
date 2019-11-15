@@ -4,19 +4,20 @@
 char auth[] = "YourAuthToken";
 char ssid[] = "YourNetworkName";
 char pass[] = "YourPassword";
+int thermistorconstant = 13;
 int page = 1;
 int fan1speed=0;
 int fan2speed=0;
-long oldPosition  = -999;
 void ICACHE_RAM_ATTR rotR(){
   switch (page)
   {
   case 1:
     if(fan1speed<=255)fan1speed+=15;
-    
+    analogWrite(4,fan1speed);
     break;
   case 2:
     if(fan2speed<=255)fan2speed+=15;
+    analogWrite(5,fan2speed);
   default:
     break;
   }
@@ -26,9 +27,11 @@ void ICACHE_RAM_ATTR rotL(){
   {
   case 1:
     if(fan1speed>=0)fan1speed-=15;
+    analogWrite(4,fan1speed);
     break;
   case 2:
     if(fan2speed>=0)fan2speed-=15;
+    analogWrite(5,fan2speed);
   default:
     break;
   }
@@ -38,8 +41,15 @@ switch (page)
   {
   case 1:
     page=2;
+    analogWrite(4,fan1speed);
+    analogWrite(5,fan2speed);
     break;
   case 2:
+    page=3;
+    analogWrite(4,fan1speed);
+    analogWrite(5,fan2speed);
+    break;
+  case 3:
     page=1;
     break;
   default:
@@ -60,4 +70,8 @@ void setup() {
 
 void loop() {
   Blynk.run();
+  if(page==3){
+    analogWrite(4,thermistorconstant*analogRead(A0));
+    analogWrite(5,thermistorconstant*analogRead(A0));
+  }
 }
