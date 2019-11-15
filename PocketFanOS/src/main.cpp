@@ -38,6 +38,7 @@ void ICACHE_RAM_ATTR rotL(){
   }
 }
 void ICACHE_RAM_ATTR btn(){
+  Serial.printf("BTN");
 switch (page)
   {
   case 1:
@@ -59,9 +60,10 @@ switch (page)
   }
 }
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   pinMode(12,INPUT_PULLUP);
-  pinMode(12,INPUT_PULLUP);
+  pinMode(13,INPUT_PULLUP);
+  pinMode(14,INPUT_PULLUP);
   pinMode(4,OUTPUT);
   pinMode(5,OUTPUT);
   Serial.printf("Siwat INC PocketFanOS");
