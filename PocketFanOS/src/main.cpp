@@ -64,6 +64,11 @@ void setup() {
   pinMode(12,INPUT);
   pinMode(4,OUTPUT);
   pinMode(5,OUTPUT);
+  Serial.printf("Siwat INC PocketFanOS");
+  Serial.printf("https://github.com/SiwatINC/PocketFanOS");
+  Serial.printf("------ Commands ------");
+  Serial.printf("[F1/F2].setspeed [SPEED FROM 0-255] | Set Fan Rotational Speed");
+  Serial.printf("mode.set [MODE FROM 1-3] | Set the device's mode, 1 or 2 is Manual, Speed is control via setspeed 3 is Automatic, Speed is controlled via PID and Thermistor");
   Blynk.begin(auth, ssid, pass);
   attachInterrupt(digitalPinToInterrupt(12),rotR,RISING);
   attachInterrupt(digitalPinToInterrupt(13),rotL,RISING);
