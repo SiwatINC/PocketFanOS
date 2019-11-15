@@ -72,6 +72,7 @@ void setup() {
   Blynk.begin(auth, ssid, pass);
   attachInterrupt(digitalPinToInterrupt(12),rotR,RISING);
   attachInterrupt(digitalPinToInterrupt(13),rotL,RISING);
+  attachInterrupt(digitalPinToInterrupt(14),btn,RISING);
 }
 
 void loop() {
