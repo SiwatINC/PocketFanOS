@@ -66,19 +66,18 @@ void setup() {
   pinMode(14,INPUT_PULLUP);
   pinMode(4,OUTPUT);
   pinMode(5,OUTPUT);
+
   Serial.printf("Siwat INC PocketFanOS");
   Serial.printf("https://github.com/SiwatINC/PocketFanOS");
   Serial.printf("------ Commands ------");
   Serial.printf("[F1/F2].setspeed [SPEED FROM 0-255] | Set Fan Rotational Speed");
   Serial.printf("mode.set [MODE FROM 1-3] | Set the device's mode, 1 or 2 is Manual, Speed is control via setspeed 3 is Automatic, Speed is controlled via PID and Thermistor");
-  Blynk.begin(auth, ssid, pass);
   attachInterrupt(digitalPinToInterrupt(12),rotR,RISING);
   attachInterrupt(digitalPinToInterrupt(13),rotL,RISING);
   attachInterrupt(digitalPinToInterrupt(14),btn,RISING);
 }
 
 void loop() {
-  Blynk.run();
   if(page==3){
     analogWrite(4,thermistorconstant*analogRead(A0));
     analogWrite(5,thermistorconstant*analogRead(A0));
@@ -89,6 +88,18 @@ void loop() {
       serialmessage.remove(0,12);
       fan1speed=serialmessage.toInt();
       analogWrite(4,fan1speed);
+    }
+    if (serialmessage.startsWith("info")){
+        Serial.printf("Siwat INC PocketFanOS");
+        Serial.println();
+        Serial.printf("https://github.com/SiwatINC/PocketFanOS");
+        Serial.println();
+        Serial.printf("------ Commands ------");
+        Serial.println();
+        Serial.printf("[F1/F2].setspeed [SPEED FROM 0-255] | Set Fan Rotational Speed");
+        Serial.println();
+        Serial.printf("mode.set [MODE FROM 1-3] | Set the device's mode, 1 or 2 is Manual, Speed is control via setspeed 3 is Automatic, Speed is controlled via PID and Thermistor");
+        Serial.println();
     }
     else if (serialmessage.startsWith("F2.setspeed ")){
       serialmessage.remove(0,12);
@@ -105,6 +116,8 @@ void loop() {
       Serial.print(fan2speed);
     } else if (serialmessage.startsWith("mode.get")){
       Serial.print(page);
+    } else {
+      Serial.printf("Unknown Command!");
     }
   }
 }
